@@ -1,0 +1,40 @@
+``` Scala
+// Version 2
+import scala.util.{Try, Success, Failure}
+// Problema 1
+def classifyNumber(num: Int): Option[String] = {
+    if (num < -1000000 || num > 1000000) {
+      None // Valor fuera del rango permitido
+    } else {
+      Some(
+        if (num > 0) "positivo"
+        else if (num < 0) "negativo"
+        else "cero"
+      )
+    }
+}
+
+println(classifyNumber(10))       // Some("positivo")
+println(classifyNumber(-500))     // Some("negativo")
+println(classifyNumber(0))        // Some("cero")
+println(classifyNumber(2000000))  // None
+println(classifyNumber(-2000000)) // None
+
+// Problema 2
+
+def safeFactorial(n: Int): Try[Int] = {
+  Try {
+    if (n < 0) throw new IllegalArgumentException("El factorial no está definido para números negativos")
+    else (1 to n).product
+  }
+}
+
+// Caso de éxito
+println(safeFactorial(5))  // Success(120)
+
+// Caso con número negativo
+println(safeFactorial(-3)) // Failure(java.lang.IllegalArgumentException: El factorial no está definido para números negativos)
+
+// Caso para 0 (factorial de 0 es 1)
+println(safeFactorial(0))  // Success(1)
+```
